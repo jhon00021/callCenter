@@ -5,6 +5,7 @@ import com.almundo.callcenter.service.Dispatcher;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.Random;
 import java.util.concurrent.PriorityBlockingQueue;
 
 /**
@@ -24,23 +25,29 @@ public class DispatcherImpl implements Dispatcher,Runnable {
 
     @Override
     public void dispatchCall() {
-        run();
+
+        try {
+            Employee take = queue.take();
+            System.out.println(take.getName() + " is busy");
+            int callDurationMinute = (int) (Math.random() * 6) +5;
+            long callDurationMilSec = callDurationMinute * 1000;
+            System.out.println(take.getName() + " time of call ..." + callDurationMilSec);
+            Thread.sleep(callDurationMilSec);
+            System.out.println(take.getName() + " is free");
+            queue.add(take);
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
 
     }
 
     @Override
     public void run() {
 
-
-        try {
-            Employee take = queue.take();
-            System.out.println(take.getName() + " is running");
-            Thread.sleep(5000);
-            System.out.println(take.getName() + " finished");
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        dispatchCall();
 
 
 

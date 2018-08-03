@@ -20,8 +20,8 @@ public class DispatcherConfigImpl implements DispatcherConfig {
     @Bean
     public ThreadPoolTaskExecutor taskExecutor() {
         ThreadPoolTaskExecutor pool = new ThreadPoolTaskExecutor();
-        pool.setCorePoolSize(5);
-        pool.setMaxPoolSize(10);
+        pool.setCorePoolSize(10);
+        pool.setMaxPoolSize(100);
         pool.setWaitForTasksToCompleteOnShutdown(true);
         return pool;
     }

@@ -2,7 +2,7 @@ package com.almundo.callcenter.service.impl;
 
 import com.almundo.callcenter.model.Employee;
 import com.almundo.callcenter.model.Level;
-import com.almundo.callcenter.service.StartCallCenter;
+import com.almundo.callcenter.service.GenerateQueue;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.PriorityBlockingQueue;
@@ -11,14 +11,11 @@ import java.util.concurrent.PriorityBlockingQueue;
  * Created by gdxdeveloper1 on 2/08/18.
  */
 @Service
-public class StartCallCenterImpl implements StartCallCenter {
-
-
+public class GenerateQueueImpl implements GenerateQueue {
 
 
     @Override
-    public PriorityBlockingQueue startCallCenterProcces() {
-
+    public PriorityBlockingQueue generateQueueEmployees() {
         PriorityBlockingQueue<Employee> queue = new PriorityBlockingQueue<>();
         createQueue(queue);
         return queue;

@@ -1,8 +1,8 @@
 package com.almundo.callcenter;
 
-import com.almundo.callcenter.service.Dispatcher;
+import com.almundo.callcenter.model.Employee;
 import com.almundo.callcenter.service.DispatcherConfig;
-import com.almundo.callcenter.service.StartCallCenter;
+import com.almundo.callcenter.service.GenerateQueue;
 import com.almundo.callcenter.service.impl.DispatcherImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
@@ -20,7 +20,7 @@ import java.util.concurrent.PriorityBlockingQueue;
 public class CallcenterApplication implements CommandLineRunner {
 
 	@Autowired
-	StartCallCenter start;
+	GenerateQueue generateQueue;
 
 	@Autowired
 	DispatcherConfig taskExecutor;
@@ -39,25 +39,15 @@ public class CallcenterApplication implements CommandLineRunner {
 
 		ApplicationContext context = new AnnotationConfigApplicationContext(CallcenterApplication.class);
 
-		PriorityBlockingQueue queue = start.startCallCenterProcces();
+		PriorityBlockingQueue<Employee> queue = generateQueue.generateQueueEmployees();
 		System.out.println(queue);
 
-		DispatcherImpl dispatcher = (DispatcherImpl) context.getBean("dispatcherImpl");
-		dispatcher.setPriorityBlockingQueue(queue);
-		taskExecutor.taskExecutor().execute(dispatcher);
 
-		DispatcherImpl dispatcher2 = (DispatcherImpl) context.getBean("dispatcherImpl");
-		dispatcher2.setPriorityBlockingQueue(queue);
-		taskExecutor.taskExecutor().execute(dispatcher2);
-/*
-		DispatcherImpl dispatcher3 = (DispatcherImpl) context.getBean("dispatcherImpl");
-		dispatcher3.setName("JHON3");
-		taskExecutor.taskExecutor().execute(dispatcher3);
-
-		DispatcherImpl dispatcher4 = (DispatcherImpl) context.getBean("dispatcherImpl");
-		dispatcher4.setName("4");
-		taskExecutor.taskExecutor().execute(dispatcher4);*/
-
+		for(int i = 0; i<11; i++){
+			DispatcherImpl dispatcher = (DispatcherImpl) context.getBean("dispatcherImpl");
+			dispatcher.setPriorityBlockingQueue(queue);
+			taskExecutor.taskExecutor().execute(dispatcher);
+		}
 
 		for (;;) {
 			int count = taskExecutor.taskExecutor().getActiveCount();
