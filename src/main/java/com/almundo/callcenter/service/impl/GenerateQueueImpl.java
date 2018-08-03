@@ -37,9 +37,6 @@ public class GenerateQueueImpl implements GenerateQueue {
         for(int i = 0; i< 2; i++)
             queue.add(new Employee("Sebastian "+(i+1),Level.DIRECTOR));
 
-
-       // return queue;
-
     }
 }
 

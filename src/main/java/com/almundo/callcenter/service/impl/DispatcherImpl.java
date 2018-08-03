@@ -2,6 +2,8 @@ package com.almundo.callcenter.service.impl;
 
 import com.almundo.callcenter.model.Employee;
 import com.almundo.callcenter.service.Dispatcher;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +20,9 @@ public class DispatcherImpl implements Dispatcher,Runnable {
 
     PriorityBlockingQueue<Employee> queue;
 
+    private final Logger logger = LogManager.getLogger(DispatcherImpl.class);
+
+
     @Override
     public void setPriorityBlockingQueue(PriorityBlockingQueue<Employee> queue){
         this.queue = queue;
@@ -28,12 +33,12 @@ public class DispatcherImpl implements Dispatcher,Runnable {
 
         try {
             Employee take = queue.take();
-            System.out.println(take.getName() + " is busy");
+            logger.info("dispatchCall:+ "+ take.getName() + " is busy");
             int callDurationMinute = (int) (Math.random() * 6) +5;
             long callDurationMilSec = callDurationMinute * 1000;
-            System.out.println(take.getName() + " time of call ..." + callDurationMilSec);
+            logger.info("dispatchCall:+ "+ take.getName() + " time of call ..." + callDurationMilSec);
             Thread.sleep(callDurationMilSec);
-            System.out.println(take.getName() + " is free");
+            logger.info("dispatchCall:+ "+ take.getName() + " is free");
             queue.add(take);
 
         } catch (InterruptedException e) {

@@ -15,6 +15,9 @@ import org.springframework.context.annotation.ComponentScan;
 
 import java.util.concurrent.PriorityBlockingQueue;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 @SpringBootApplication
 @ComponentScan(basePackages = "com.almundo.callcenter.service")
 public class CallcenterApplication implements CommandLineRunner {
@@ -25,6 +28,7 @@ public class CallcenterApplication implements CommandLineRunner {
 	@Autowired
 	DispatcherConfig taskExecutor;
 
+	private final Logger logger = LogManager.getLogger(CallcenterApplication.class);
 
 
 
@@ -36,11 +40,12 @@ public class CallcenterApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... strings) throws Exception {
+		logger.info("run: procces started");
 
 		ApplicationContext context = new AnnotationConfigApplicationContext(CallcenterApplication.class);
-
 		PriorityBlockingQueue<Employee> queue = generateQueue.generateQueueEmployees();
-		System.out.println(queue);
+		logger.info("run: Employee queue got it, with information "+ queue);
+
 
 
 		for(int i = 0; i<11; i++){
@@ -51,7 +56,7 @@ public class CallcenterApplication implements CommandLineRunner {
 
 		for (;;) {
 			int count = taskExecutor.taskExecutor().getActiveCount();
-			System.out.println("Active Threads : " + count);
+			logger.info("run: Active Threads : " + count);
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
