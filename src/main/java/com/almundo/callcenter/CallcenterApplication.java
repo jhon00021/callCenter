@@ -30,8 +30,6 @@ public class CallcenterApplication implements CommandLineRunner {
 
 	private final Logger logger = LogManager.getLogger(CallcenterApplication.class);
 
-
-
 	public static void main(String[] args) {
 		SpringApplication app = new SpringApplication(CallcenterApplication.class);
 		app.setBannerMode(Banner.Mode.OFF);
@@ -47,7 +45,7 @@ public class CallcenterApplication implements CommandLineRunner {
 		logger.info("run: Employee queue got it, with information "+ queue);
 
 
-
+		//generates calls
 		for(int i = 0; i<11; i++){
 			DispatcherImpl dispatcher = (DispatcherImpl) context.getBean("dispatcherImpl");
 			dispatcher.setPriorityBlockingQueue(queue);
@@ -56,14 +54,14 @@ public class CallcenterApplication implements CommandLineRunner {
 
 		for (;;) {
 			int count = taskExecutor.taskExecutor().getActiveCount();
-			logger.info("run: Active Threads : " + count);
+			logger.info("run: Active calls : " + count);
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 			if (count == 0) {
-				System.out.println(queue);
+				logger.info("run: finished all calls ");
 				taskExecutor.taskExecutor().shutdown();
 				break;
 			}
