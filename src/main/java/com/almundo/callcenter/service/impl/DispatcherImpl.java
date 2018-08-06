@@ -57,9 +57,10 @@ public class DispatcherImpl implements Dispatcher,Runnable {
     }
 
     /**
-     * this method dispatches each call, when the call starts, a empoyee will take it
-     * the employees queue is ordered by employee level, the queue has the employees free,
+     * this method dispatches each call, when the call starts, an employee will take it
+     * the employees queue is order by employee level, the queue has the employees available,
      * the employee that takes the call, will not be able to take another until it finishes
+     * if some call arrives and there is not available employee, the queue will block the procces until an employee be available
      * it simulates a duration of the call
      */
     @Override

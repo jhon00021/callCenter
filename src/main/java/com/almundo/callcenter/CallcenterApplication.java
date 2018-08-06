@@ -56,6 +56,12 @@ public class CallcenterApplication implements CommandLineRunner {
 	 */
 	@Override
 	public void run(String... strings) throws Exception {
+
+
+
+	}
+
+	public void example(){
 		logger.info("run: procces started");
 
 		ApplicationContext context = new AnnotationConfigApplicationContext(CallcenterApplication.class);
@@ -84,8 +90,6 @@ public class CallcenterApplication implements CommandLineRunner {
 				break;
 			}
 		}
-
-
 
 	}
 

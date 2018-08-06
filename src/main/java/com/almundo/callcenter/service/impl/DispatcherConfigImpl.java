@@ -41,8 +41,8 @@ public class DispatcherConfigImpl implements DispatcherConfig {
     }
 
     /**
-     * it creates the ThreadPool, and it has configutarion about how many call will attend at the same time,
-     * and how many calls can get
+     * it creates the ThreadPool, and it has configuration about how many call will attend at the same time,
+     * and how many calls can it could get in line
      * @return the Thread poll whit its configuration
      */
     @Override
