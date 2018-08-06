@@ -1,13 +1,18 @@
 package com.almundo.callcenter.impl;
 
+import com.almundo.callcenter.CallcenterApplication;
 import com.almundo.callcenter.model.Employee;
 import com.almundo.callcenter.service.Dispatcher;
+import com.almundo.callcenter.service.DispatcherConfig;
 import com.almundo.callcenter.service.GenerateQueue;
+import com.almundo.callcenter.service.impl.DispatcherImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.concurrent.PriorityBlockingQueue;
@@ -24,7 +29,9 @@ public class DispatcherTest {
     @Autowired
     private Dispatcher dispatcher;
 
+
     private PriorityBlockingQueue<Employee> queue;
+
 
     @Before
     public void init(){
@@ -32,14 +39,16 @@ public class DispatcherTest {
     }
 
     @Test
-    public void validateConf(){
+    public void validatequeuearteracall(){
         int sizeBeforeRun = queue.size();
         dispatcher.setPriorityBlockingQueue(queue);
         dispatcher.dispatchCall();
 
-        //assertThat(queue.size()).isLessThan(sizeBeforeRun);
+        assertThat(queue.size()).isEqualTo(sizeBeforeRun);
 
     }
+
+
 
 
 

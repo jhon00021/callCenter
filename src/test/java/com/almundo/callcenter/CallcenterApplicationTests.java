@@ -90,4 +90,48 @@ public class CallcenterApplicationTests {
 
     }
 
+    @Test
+    public void validateprocceswith10() throws InterruptedException {
+        PriorityBlockingQueue<Employee> queue = generateQueue.generateQueueEmployees();
+        int employeesSizeBefore = queue.size();
+        taskExecutor = (DispatcherConfig) context.getBean("dispatcherConfigImpl");
+        int sizeBeforeRun = queue.size();
+        //generates calls
+        for(int i = 0; i<10; i++){
+            DispatcherImpl dispatcher = (DispatcherImpl) context.getBean("dispatcherImpl");
+            dispatcher.setPriorityBlockingQueue(queue);
+            taskExecutor.taskExecutor().execute(dispatcher);
+        }
+        //it should have less employees free because they shoulld be attending a call
+        assertThat(queue.size()).isLessThan(sizeBeforeRun);
+        Thread.sleep(11000);
+        //after wait 11 seconds it sholud have available all employees
+        assertThat(queue.size()).isEqualTo(sizeBeforeRun);
+    }
+
+    @Test
+    public void validateprocceswith20() throws InterruptedException {
+        PriorityBlockingQueue<Employee> queue = generateQueue.generateQueueEmployees();
+        int employeesSizeBefore = queue.size();
+        taskExecutor = (DispatcherConfig) context.getBean("dispatcherConfigImpl");
+        int sizeBeforeRun = queue.size();
+        //generates calls
+        for(int i = 0; i<20; i++){
+            DispatcherImpl dispatcher = (DispatcherImpl) context.getBean("dispatcherImpl");
+            dispatcher.setPriorityBlockingQueue(queue);
+            taskExecutor.taskExecutor().execute(dispatcher);
+        }
+        //it should have less employees free because they shoulld be attending a call
+        assertThat(queue.size()).isLessThan(sizeBeforeRun);
+        Thread.sleep(11000);
+        //it should have less employees free because they shoulld be attending a call
+        assertThat(queue.size()).isLessThan(sizeBeforeRun);
+        Thread.sleep(11000);
+        //after wait 22 seconds it sholud have available all employees
+
+        assertThat(queue.size()).isEqualTo(sizeBeforeRun);
+
+
+    }
+
 }

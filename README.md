@@ -19,5 +19,10 @@ you have to download this proyect with git, after you have to install dependenci
 Built With
 Maven
 
+Extra
+
+When there is not an employee available, the call will be waiting until an employee can attend him, this using a PriorityBlockingQueue, this queue will order the objetcs by level (this is configuratred in the model class method compareTo) and each employee in the queue will take a call, using the method take form PriorityBlockingQueue, when there in not an employee in the queue means that the PriorityBlockingQueue will block the incomming call until a employee be insert in the queue again with the method add fro PriorityBlockingQueue.
+
+
 Author
 Jhon Velasquez.
