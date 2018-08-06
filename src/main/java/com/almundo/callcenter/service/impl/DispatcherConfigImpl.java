@@ -11,7 +11,9 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
 /**
- * Created by gdxdeveloper1 on 2/08/18.
+ * Created by Jhon Velasquez
+ * This class has the employee queue control.
+ * The variables are loaded using the value thah application.properties file contains
  */
 
 @Service
@@ -20,8 +22,14 @@ import org.springframework.stereotype.Service;
 @ConfigurationProperties(prefix = "clients")
 public class DispatcherConfigImpl implements DispatcherConfig {
 
+    /**
+     * this field defines the max current client
+     */
     private int maxconcurrentclient;
 
+    /**
+     * this field defines the max client
+     */
     private int maxclient;
 
     public void setMaxconcurrentclient(int maxconcurrentclient) {
@@ -32,6 +40,11 @@ public class DispatcherConfigImpl implements DispatcherConfig {
         this.maxclient = maxclient;
     }
 
+    /**
+     * it creates the ThreadPool, and it has configutarion about how many call will attend at the same time,
+     * and how many calls can get
+     * @return the Thread poll whit its configuration
+     */
     @Override
     @Bean
     public ThreadPoolTaskExecutor taskExecutor() {

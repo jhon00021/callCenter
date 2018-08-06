@@ -18,24 +18,42 @@ import java.util.concurrent.PriorityBlockingQueue;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * This class has the main procces, it starts the procces and get the employee queue and simulates clients
+ */
 @SpringBootApplication
 @ComponentScan(basePackages = "com.almundo.callcenter.service")
 public class CallcenterApplication implements CommandLineRunner {
 
+	/**
+	 * this is the bean using for generate the queue
+	 */
 	@Autowired
-	GenerateQueue generateQueue;
+	private GenerateQueue generateQueue;
 
+	/**
+	 * this is the bean using for generate the configuration for the amount clients and concurrent clients
+	 */
 	@Autowired
-	DispatcherConfig taskExecutor;
+	private DispatcherConfig taskExecutor;
 
 	private final Logger logger = LogManager.getLogger(CallcenterApplication.class);
 
+	/**
+	 * Main application method, it starts the application
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		SpringApplication app = new SpringApplication(CallcenterApplication.class);
 		app.setBannerMode(Banner.Mode.OFF);
 		app.run(args);
 	}
 
+	/**
+	 * This method gets the employ queue, generates calls and prints how the procces is running
+	 * @param strings
+	 * @throws Exception
+	 */
 	@Override
 	public void run(String... strings) throws Exception {
 		logger.info("run: procces started");
@@ -46,7 +64,7 @@ public class CallcenterApplication implements CommandLineRunner {
 
 
 		//generates calls
-		for(int i = 0; i<11; i++){
+		for(int i = 0; i<10; i++){
 			DispatcherImpl dispatcher = (DispatcherImpl) context.getBean("dispatcherImpl");
 			dispatcher.setPriorityBlockingQueue(queue);
 			taskExecutor.taskExecutor().execute(dispatcher);

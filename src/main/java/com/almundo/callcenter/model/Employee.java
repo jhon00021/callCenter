@@ -3,7 +3,7 @@ package com.almundo.callcenter.model;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by gdxdeveloper1 on 2/08/18.
+ * Created by Jhon Velasquez
  */
 
 

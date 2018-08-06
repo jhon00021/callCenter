@@ -10,7 +10,11 @@ import org.springframework.stereotype.Service;
 import java.util.concurrent.PriorityBlockingQueue;
 
 /**
- * Created by gdxdeveloper1 on 2/08/18.
+ * Created by Jhon Velasquez
+ * This class controls the calls and dispatches to a employee free the call,
+ * when the employee finishes it will be available to attend another call
+ * Each call starts will be dispatches for a new Thread
+ * The variables are loaded using the value thah application.properties file contains
  */
 
 @Service
@@ -18,12 +22,21 @@ import java.util.concurrent.PriorityBlockingQueue;
 @ConfigurationProperties(prefix = "dispatchcall")
 public class DispatcherImpl implements Dispatcher,Runnable {
 
-    PriorityBlockingQueue<Employee> queue;
-
     private final Logger logger = LogManager.getLogger(DispatcherImpl.class);
 
+    /**
+     * it is the employee queue
+     */
+    private PriorityBlockingQueue<Employee> queue;
+
+    /**
+     * this field defines the min time that the call will have
+     */
     private int mintime;
 
+    /**
+     * this field defines the max time that the call will have
+     */
     private int maxtime;
 
     public void setMintime(int mintime) {
@@ -34,11 +47,21 @@ public class DispatcherImpl implements Dispatcher,Runnable {
         this.maxtime = maxtime;
     }
 
+    /**
+     * it sets the employees queue to the dispatch to know the employees free
+     * @param queue the queue that was created with all the employees
+     */
     @Override
     public void setPriorityBlockingQueue(PriorityBlockingQueue<Employee> queue){
         this.queue = queue;
     }
 
+    /**
+     * this method dispatches each call, when the call starts, a empoyee will take it
+     * the employees queue is ordered by employee level, the queue has the employees free,
+     * the employee that takes the call, will not be able to take another until it finishes
+     * it simulates a duration of the call
+     */
     @Override
     public void dispatchCall() {
         try {
@@ -55,6 +78,9 @@ public class DispatcherImpl implements Dispatcher,Runnable {
         }
     }
 
+    /*+
+     * this method starts a new thread for each call
+     */
     @Override
     public void run() {
         dispatchCall();
